@@ -111,12 +111,11 @@ public class CreatePatientCardActivity extends AppCompatActivity {
 
     // Переход на главный экран
     private void goToMainActivity() {
-        // ВРЕМЕННО: просто показываем сообщение
+
         Toast.makeText(this, "Карта пациента создана!", Toast.LENGTH_SHORT).show();
 
-        // Если есть MainActivity, раскомментируй:
-        // Intent intent = new Intent(CreatePatientCardActivity.this, MainActivity.class);
-        // startActivity(intent);
-        // finish();
+        Intent intent = new Intent(CreatePatientCardActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

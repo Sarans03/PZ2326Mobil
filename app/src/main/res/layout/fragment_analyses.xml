@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- КАМЕРА (закреплена сверху, не скроллится) -->
+    <ImageView
+        android:id="@+id/iv_resource_default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="Status bar"
+        android:scaleType="fitStart"
+        android:src="@drawable/status_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Скроллируемый контент -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_resource_default">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Поле поиска -->
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/background_field"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="12dp"
+                android:hint="Искать анализы"
+                android:padding="12dp"
+                android:textSize="14sp" />
+
+            <!-- Заголовок "Акции и новости" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Акции и новости"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Горизонтальный скролл - Акции -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_promotions"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="12dp" />
+
+            <!-- Заголовок "Каталог анализов" -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Каталог анализов"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Переключение категорий -->
+            <RadioGroup
+                android:id="@+id/rg_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_popular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/category_button_background"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Популярные"
+                    android:textColor="@color/category_text_color"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_covid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/category_button_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Covid"
+                    android:textColor="@color/category_text_color"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_complex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/category_button_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Комплексные"
+                    android:textColor="@color/category_text_color"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+            <!-- Вертикальный список анализов -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_analyses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:nestedScrollingEnabled="false" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

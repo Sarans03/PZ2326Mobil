@@ -9,31 +9,48 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.PZ2326">
-        <activity
-            android:name=".CreatePatientCardActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CreatePasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".VerificationCodeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" /> <!-- Splash Activity - стартовый экран -->
+
+        <!-- Splash Activity - стартовый экран -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Onboarding Activity -->
+        </activity>
+
+        <!-- Onboarding Activity -->
         <activity
             android:name=".OnboardingActivity"
             android:exported="false" />
+
+        <!-- Login Activity -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <!-- Verification Code Activity -->
+        <activity
+            android:name=".VerificationCodeActivity"
+            android:exported="false" />
+
+        <!-- Create Password Activity -->
+        <activity
+            android:name=".CreatePasswordActivity"
+            android:exported="false" />
+
+        <!-- Create Patient Card Activity -->
+        <activity
+            android:name=".CreatePatientCardActivity"
+            android:exported="false" />
+
+        <!-- Main Activity (главный экран с навигацией) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
