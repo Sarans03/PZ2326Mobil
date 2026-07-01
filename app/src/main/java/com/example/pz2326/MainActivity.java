@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.nav_analyses) {
                 selectedFragment = new AnalysesFragment();
             } else if (item.getItemId() == R.id.nav_results) {
-                selectedFragment = new ResultsFragment();
+                selectedFragment = new CartFragment();
             } else if (item.getItemId() == R.id.nav_support) {
                 selectedFragment = new SupportFragment();
             } else if (item.getItemId() == R.id.nav_profile) {

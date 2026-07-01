@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,6 +119,36 @@ public class AnalysesFragment extends Fragment {
         analysisAdapter.notifyDataSetChanged();
     }
 
+    private void showAnalysisBottomSheet(Analysis analysis) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+        View bottomSheetView = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_analysis, null);
+
+        TextView tvName = bottomSheetView.findViewById(R.id.tv_analysis_name);
+        TextView tvDescription = bottomSheetView.findViewById(R.id.tv_description);
+        TextView tvPreparation = bottomSheetView.findViewById(R.id.tv_preparation);
+        TextView tvDays = bottomSheetView.findViewById(R.id.tv_days);
+        TextView tvBiomaterial = bottomSheetView.findViewById(R.id.tv_biomaterial);
+        Button btnAdd = bottomSheetView.findViewById(R.id.btn_add_to_cart);
+        ImageButton btnClose = bottomSheetView.findViewById(R.id.btn_close);
+
+        tvName.setText(analysis.getName());
+        tvDays.setText(analysis.getDays());
+        tvBiomaterial.setText("Венозная кровь");
+        btnAdd.setText("Добавить за " + analysis.getPrice());
+
+        btnClose.setOnClickListener(v -> bottomSheetDialog.dismiss());
+
+        btnAdd.setOnClickListener(v -> {
+            analysis.setInCart(true);
+            analysisAdapter.notifyDataSetChanged();
+            Toast.makeText(getContext(), "Добавлено в корзину", Toast.LENGTH_SHORT).show();
+            bottomSheetDialog.dismiss();
+        });
+
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+    }
+
     public static class Promotion {
         private String title, tests, price;
         public Promotion(String title, String tests, String price) {
@@ -129,6 +161,8 @@ public class AnalysesFragment extends Fragment {
 
     public static class Analysis {
         private String name, days, price, category;
+        private boolean isInCart = false;
+
         public Analysis(String name, String days, String price, String category) {
             this.name = name; this.days = days; this.price = price; this.category = category;
         }
@@ -136,6 +170,8 @@ public class AnalysesFragment extends Fragment {
         public String getDays() { return days; }
         public String getPrice() { return price; }
         public String getCategory() { return category; }
+        public boolean isInCart() { return isInCart; }
+        public void setInCart(boolean inCart) { isInCart = inCart; }
     }
 
     public class PromotionAdapter extends RecyclerView.Adapter<PromotionAdapter.PromotionViewHolder> {
@@ -186,8 +222,31 @@ public class AnalysesFragment extends Fragment {
             holder.tvName.setText(a.getName());
             holder.tvDays.setText(a.getDays());
             holder.tvPrice.setText(a.getPrice());
-            holder.btnAdd.setOnClickListener(v ->
-                    Toast.makeText(getContext(), "Добавлено: " + a.getName(), Toast.LENGTH_SHORT).show());
+
+            if (a.isInCart()) {
+                holder.btnAdd.setText("Убрать");
+                holder.btnAdd.setBackgroundResource(R.drawable.background_button_yandex);
+                holder.btnAdd.setTextColor(getResources().getColor(android.R.color.black));
+            } else {
+                holder.btnAdd.setText("Добавить");
+                holder.btnAdd.setBackgroundResource(R.drawable.background_button_active);
+                holder.btnAdd.setTextColor(getResources().getColor(android.R.color.white));
+            }
+
+            holder.btnAdd.setOnClickListener(v -> {
+                if (a.isInCart()) {
+                    a.setInCart(false);
+                    Toast.makeText(getContext(), "Удалено из корзины", Toast.LENGTH_SHORT).show();
+                } else {
+                    a.setInCart(true);
+                    Toast.makeText(getContext(), "Добавлено в корзину", Toast.LENGTH_SHORT).show();
+                }
+                notifyDataSetChanged();
+            });
+
+            holder.itemView.setOnClickListener(v -> {
+                showAnalysisBottomSheet(a);
+            });
         }
 
         @Override
